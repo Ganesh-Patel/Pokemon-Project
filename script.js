@@ -15,53 +15,82 @@ document.addEventListener('DOMContentLoaded', function() {
     reset.addEventListener('click', function() {
         location.reload();
     });
+
+    document.getElementById('nextBtn').addEventListener('click', function() {
+        if (currentPage * ITEMS_PER_PAGE >= filteredData.length) {
+            alert("You are already at the last page.");
+        } else {
+            currentPage++;
+            displayData();
+        }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', function() {
+        if (currentPage <= 1) {
+            alert("You are already at the first page.");
+        } else {
+            currentPage--;
+            displayData();
+        }
+    });
 });
+
+const ITEMS_PER_PAGE = 12;
+const TOTAL_ITEMS = 200;
+let currentPage = 1;
+let allData = [];
+let filteredData = [];
 
 let pokemonCardContainer = document.getElementById('pokemon-card-container');
 
 function createPokemonCard(details) {
+    console.log(details);
+    let abilities = details.abilities.map(ability => ability.ability.name).join(', ');
     let card = document.createElement('div');
     card.classList.add('card');
     card.innerHTML = `
         <div class="card-inner">
-            <div class="card-front">
+            <div class="card-front" id="${details.types[0].type.name}">
                 <div class="id">${details.id}</div>
-                <img src='${details.sprites.front_default}'/>
+               <div class="imgg"> <img src='${details.sprites.front_default}'/></div>
                 <div class="name">${details.name}</div>
                 <div class="type">${details.types[0].type.name}</div>
             </div>
-            <div class="card-back">
+            <div class="card-back" id="${details.types[0].type.name}" >
                 <img src='${details.sprites.back_default}'/>
                 <div class="name">${details.name}</div>
-                <div class="ability">${details.abilities[0].ability.name}</div>
+                <div class="abilities">${abilities}</div>
             </div>
         </div>
     `;
     return card;
 }
 
+function displayData() {
+    pokemonCardContainer.innerHTML = ''; // Clear previous cards
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = Math.min(currentPage * ITEMS_PER_PAGE, filteredData.length);
+    
+    for (let i = start; i < end; i++) {
+        let card = createPokemonCard(filteredData[i]);
+        pokemonCardContainer.appendChild(card);
+    }
+}
+
 function filterByType(type) {
-    let allCards = document.querySelectorAll('.card');
-    allCards.forEach(function(card) {
-        let pokemonType = card.querySelector('.card-front .type').innerText;
-        if (pokemonType === type) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    filteredData = allData.filter(pokemon => 
+        pokemon.types.some(t => t.type.name === type)
+    );
+    currentPage = 1;
+    displayData();
 }
 
 function filterByName(searchValue) {
-    let allCards = document.querySelectorAll('.card');
-    allCards.forEach(function(card) {
-        let pokemonName = card.querySelector('.card-front .name').innerText.toLowerCase();
-        if (pokemonName.startsWith(searchValue.toLowerCase())) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    filteredData = allData.filter(pokemon =>
+        pokemon.name.toLowerCase().startsWith(searchValue.toLowerCase())
+    );
+    currentPage = 1;
+    displayData();
 }
 
 async function fetchPokemon(i) {
@@ -71,11 +100,10 @@ async function fetchPokemon(i) {
 }
 
 async function fetchMaindata() {
-    for (let i = 1; i <= 200; i++) {
+    for (let i = 1; i <= TOTAL_ITEMS; i++) {
         let pokemon = await fetchPokemon(i);
-        let card = createPokemonCard(pokemon);
-        pokemonCardContainer.appendChild(card);
+        allData.push(pokemon);
     }
+    filteredData = allData;
+    displayData();
 }
-
-
