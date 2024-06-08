@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const ITEMS_PER_PAGE = 12;
 const TOTAL_ITEMS = 200;
+const BATCH_SIZE = 12; // Number of items to fetch in each batch
 let currentPage = 1;
 let allData = [];
 let filteredData = [];
@@ -100,10 +101,14 @@ async function fetchPokemon(i) {
 }
 
 async function fetchMaindata() {
-    for (let i = 1; i <= TOTAL_ITEMS; i++) {
-        let pokemon = await fetchPokemon(i);
-        allData.push(pokemon);
+    for (let i = 1; i <= TOTAL_ITEMS; i += BATCH_SIZE) {
+        const fetchPromises = [];
+        for (let j = i; j < i + BATCH_SIZE && j <= TOTAL_ITEMS; j++) {
+            fetchPromises.push(fetchPokemon(j));
+        }
+        const batchResults = await Promise.all(fetchPromises);
+        allData.push(...batchResults);
+        filteredData = allData;
+        displayData();
     }
-    filteredData = allData;
-    displayData();
 }
