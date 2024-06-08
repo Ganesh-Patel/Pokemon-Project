@@ -113,3 +113,4 @@ async function fetchMaindata() {
         displayData();
     }
     loadingSpinner.style.display = 'none';
+}
