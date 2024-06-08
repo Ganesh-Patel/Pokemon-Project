@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GeeksterMon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Cards</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    </select>
-    <h1>GeeksterMon</h1>
+    <h1>Pokémon Cards</h1>
     <div class="select-input">
-        <select name="type" id="type">
-        <option value="">Types</option>
-        <option value="grass">Grass</option>
-        <option value="fire">Fire</option>
-        <option value="water">Water</option>
-        <option value="bug">Bug</option>
-        <option value="normal">Normal</option>
-        <option value="poison">Poison</option>
-        <option value="electric">Electric</option>
-        <option value="ground">Ground</option>
-        <option value="fairy">Fairy</option>
-        <option value="fighting">Fighting</option>
-        <option value="psychic">Psychic</option>
-        <option value="rock">Rock</option>
-        <option value="ghost">Ghost</option>
-        <option value="ice">Ice</option>
-        <option value="dragon">Dragon</option>
+        <select id="type">
+            <option value="">All Types</option>
+            <option value="grass">Grass</option>
+            <option value="bug">Bug</option>
+            <option value="fire">Fire</option>
+            <option value="water">Water</option>
+            <option value="ice">Ice</option>
+            <option value="electric">Electric</option>
+            <option value="psychic">Psychic</option>
+            <option value="fairy">Fairy</option>
+            <option value="ghost">Ghost</option>
+            <option value="ground">Ground</option>
+            <option value="poison">Poison</option>
+            <option value="normal">Normal</option>
+            <option value="dragon">Dragon</option>
+            <option value="fighting">Fighting</option>
+            <option value="rock">Rock</option>
+            <option value="dark">Dark</option>
         </select>
-        <button id="filter">Filter By type</button>
-        <input type="text" placeholder="Search Pokemon by name" id="search" />
-        <button id="resetBtn">Reset Page</a></button>
+        <input type="text" id="search" placeholder="Search by name">
+        <button id="filter">Filter</button>
+        <button id="resetBtn">Reset</button>
     </div>
+    <div id="loading-spinner" class="spinner"></div>
     <div id="pokemon-card-container"></div>
-    <button id="prevBtn">Previous</button>
-    <button id="nextBtn">Next</button>
+    <div class="pagination">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
     <script src="script.js"></script>
 </body>
-
 </html>
