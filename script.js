@@ -43,6 +43,7 @@ let allData = [];
 let filteredData = [];
 
 let pokemonCardContainer = document.getElementById('pokemon-card-container');
+let loadingSpinner = document.getElementById('loading-spinner');
 
 function createPokemonCard(details) {
     console.log(details);
@@ -53,11 +54,11 @@ function createPokemonCard(details) {
         <div class="card-inner">
             <div class="card-front" id="${details.types[0].type.name}">
                 <div class="id">${details.id}</div>
-               <div class="imgg"> <img src='${details.sprites.front_default}'/></div>
+                <div class="imgg"><img src='${details.sprites.front_default}'/></div>
                 <div class="name">${details.name}</div>
                 <div class="type">${details.types[0].type.name}</div>
             </div>
-            <div class="card-back" id="${details.types[0].type.name}" >
+            <div class="card-back" id="${details.types[0].type.name}">
                 <img src='${details.sprites.back_default}'/>
                 <div class="name">${details.name}</div>
                 <div class="abilities">${abilities}</div>
@@ -111,4 +112,4 @@ async function fetchMaindata() {
         filteredData = allData;
         displayData();
     }
-}
+    loadingSpinner.style.display = 'none';
