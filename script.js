@@ -81,7 +81,8 @@ function displayData() {
 
 function filterByType(type) {
     filteredData = allData.filter(pokemon => 
-        pokemon.types.some(t => t.type.name === type)
+        // pokemon.types.some(t => t.type.name === type)
+        pokemon.types[0].type.name.toLowerCase() === type.toLowerCase();
     );
     currentPage = 1;
     displayData();
