@@ -81,13 +81,13 @@ function displayData() {
 
 function filterByType(type) {
     filteredData = allData.filter(pokemon => 
-        // pokemon.types.some(t => t.type.name === type)
+ 
         pokemon.types[0].type.name.toLowerCase() === type.toLowerCase();
     );
     currentPage = 1;
     displayData();
 }
-
+       // pokemon.types.some(t => t.type.name === type)
 function filterByName(searchValue) {
     filteredData = allData.filter(pokemon =>
         pokemon.name.toLowerCase().startsWith(searchValue.toLowerCase())
